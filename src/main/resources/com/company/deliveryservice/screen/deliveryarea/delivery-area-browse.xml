@@ -1,0 +1,77 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<window xmlns="http://jmix.io/schema/ui/window"
+        xmlns:c="http://jmix.io/schema/ui/jpql-condition"
+        xmlns:maps="http://jmix.io/schema/maps/ui"
+        caption="msg://deliveryAreaBrowse.caption"
+        focusComponent="deliveryAreasTable">
+    <data readOnly="true">
+        <collection id="deliveryAreasDc"
+                    class="com.company.deliveryservice.entity.DeliveryArea">
+            <fetchPlan extends="_base"/>
+            <loader id="deliveryAreasDl">
+                <query>
+                    <![CDATA[select e from DeliveryArea e]]>
+                </query>
+            </loader>
+        </collection>
+    </data>
+    <facets>
+        <dataLoadCoordinator auto="true"/>
+        <screenSettings id="settingsFacet" auto="true"/>
+    </facets>
+    <actions>
+        <action id="lookupSelectAction"
+                caption="msg:///actions.Select"
+                icon="LOOKUP_OK"
+                primary="true"
+                shortcut="${COMMIT_SHORTCUT}"/>
+        <action id="lookupCancelAction"
+                caption="msg:///actions.Cancel"
+                icon="LOOKUP_CANCEL"/>
+    </actions>
+    <!--<dialogMode height="600"
+                width="800"/>-->
+    <layout spacing="true">
+        <vbox id="all" spacing="true">
+        <vbox id="tablebox" spacing="true" >
+        <filter id="filter"
+                dataLoader="deliveryAreasDl">
+            <properties include=".*"/>
+        </filter>
+        <groupTable id="deliveryAreasTable"
+                    width="100%"
+                    dataContainer="deliveryAreasDc">
+            <actions>
+                <action id="add" type="add"/>
+                <action id="create" type="create"/>
+                <action id="edit" type="edit"/>
+                <action id="remove" type="remove"/>
+            </actions>
+            <columns>
+                <column id="polygon"/>
+                <column id="color"/>
+            </columns>
+            <simplePagination/>
+            <buttonsPanel id="buttonsPanel"
+                          alwaysVisible="true">
+                <button id="addBtn" action="deliveryAreasTable.add"/>
+                <button id="createBtn" action="deliveryAreasTable.create"/>
+                <button id="editBtn" action="deliveryAreasTable.edit"/>
+                <button id="removeBtn" action="deliveryAreasTable.remove"/>
+            </buttonsPanel>
+        </groupTable>
+        <hbox id="lookupActions" spacing="true" visible="false">
+            <button action="lookupSelectAction"/>
+            <button action="lookupCancelAction"/>
+        </hbox>
+        </vbox>
+        <maps:geoMap id="map" height="400px" width="600px" centerX="50.159769" centerY="53.20376" zoom="12">
+            <maps:layers selectedLayer="areaLayer">
+                <maps:tile id="tiles" tileProvider="map_OpenStreetMap"/>
+                <maps:vector id="areaLayer" dataContainer="deliveryAreasDc"/>
+            </maps:layers>
+        </maps:geoMap>
+        </vbox>
+    </layout>
+
+</window>

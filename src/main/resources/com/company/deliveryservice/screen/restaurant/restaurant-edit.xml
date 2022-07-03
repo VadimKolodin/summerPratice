@@ -1,0 +1,59 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<window xmlns="http://jmix.io/schema/ui/window"
+        xmlns:maps="http://jmix.io/schema/maps/ui"
+        caption="msg://restaurantEdit.caption"
+        focusComponent="form">
+    <data>
+        <instance id="restaurantDc"
+                  class="com.company.deliveryservice.entity.Restaurant">
+            <fetchPlan extends="_base">
+                <property name="delivery" fetchPlan="_base"/>
+            </fetchPlan>
+            <loader/>
+        </instance>
+    </data>
+    <facets>
+        <dataLoadCoordinator auto="true"/>
+        <screenSettings id="settingsFacet" auto="true"/>
+    </facets>
+    <actions>
+        <action id="windowCommitAndClose" caption="msg:///actions.Ok"
+                icon="EDITOR_OK"
+                primary="true"
+                shortcut="${COMMIT_SHORTCUT}"/>
+        <action id="windowClose"
+                caption="msg:///actions.Close"
+                icon="EDITOR_CANCEL"/>
+    </actions>
+    <dialogMode height="600"
+                width="800"/>
+    <layout spacing="true" >
+        <vbox id="tablebox" spacing="true" >
+        <form id="form" dataContainer="restaurantDc">
+            <column width="350px">
+                <textField id="nameField" property="name"/>
+                <textField id="addressField" property="address"/>
+                <textField id="coordinatesField" property="coordinates"/>
+                <entityPicker id="deliveryField" property="delivery">
+                    <actions>
+                        <action id="entityLookup" type="entity_lookup"/>
+                        <action id="entityClear" type="entity_clear"/>
+                    </actions>
+                </entityPicker>
+            </column>
+        </form>
+        <hbox id="editActions" spacing="true">
+            <button id="commitAndCloseBtn" action="windowCommitAndClose"/>
+            <button id="closeBtn" action="windowClose"/>
+        </hbox>
+        </vbox>
+        <maps:geoMap id="map" height="400px" width="600px" centerX="50.159769" centerY="53.20376" zoom="12">
+            <maps:layers selectedLayer="restaurantLayer">
+                <maps:tile id="tileLayer" tileProvider="map_OpenStreetMap"/>
+                <maps:vector id="restaurantLayer"
+                             dataContainer="restaurantDc"
+                             editable="true"/>
+            </maps:layers>
+        </maps:geoMap>
+    </layout>
+</window>
