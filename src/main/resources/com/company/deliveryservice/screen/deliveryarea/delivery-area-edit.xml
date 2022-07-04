@@ -26,7 +26,9 @@
     <dialogMode height="600"
                 width="800"/>
     <layout spacing="true" >
+        <hbox id="colorbox" spacing="true">
         <vbox id="tablebox" spacing="true" >
+
         <form id="form" dataContainer="deliveryAreaDc">
             <column width="350px">
                 <textField id="polygonField" property="polygon"/>
@@ -37,7 +39,12 @@
             <button id="commitAndCloseBtn" action="windowCommitAndClose"/>
             <button id="closeBtn" action="windowClose"/>
         </hbox>
+
         </vbox>
+            <colorPicker caption="Choose colour for polygone"
+                         dataContainer="deliveryAreaDc"
+                         property="color"/>
+        </hbox>
         <maps:geoMap id="map" height="400px" width="600px" centerX="50.159769" centerY="53.20376" zoom="12">
             <maps:layers selectedLayer="areaLayer">
                 <maps:tile id="tileLayer" tileProvider="map_OpenStreetMap"/>
