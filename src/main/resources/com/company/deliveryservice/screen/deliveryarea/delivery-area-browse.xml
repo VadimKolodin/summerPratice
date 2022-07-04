@@ -69,6 +69,7 @@
             <maps:layers selectedLayer="areaLayer">
                 <maps:tile id="tiles" tileProvider="map_OpenStreetMap"/>
                 <maps:vector id="areaLayer" dataContainer="deliveryAreasDc"/>
+
             </maps:layers>
         </maps:geoMap>
         </vbox>
