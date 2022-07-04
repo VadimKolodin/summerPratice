@@ -45,6 +45,7 @@ public class DeliveryAreaEdit extends StandardEditor<DeliveryArea> {
     @Subscribe
     protected void onBeforeShow(BeforeShowEvent event) {
         CanvasLayer canvas = map.getCanvas();
+
         for (Restaurant restaurant: restaurantService.getAllRestaurant()){
             CanvasLayer.Point point = canvas.addPoint(restaurant.getCoordinates());
             point.setTooltipContent(restaurant.getName()).setStyle(
@@ -52,13 +53,14 @@ public class DeliveryAreaEdit extends StandardEditor<DeliveryArea> {
                             .withFontIcon(JmixIcon.COFFEE)
                             .setIconPathFillColor("#"+restaurant.getDelivery().getColor()));
         }
+
         for (DeliveryArea deliveryArea: deliveryAreaService.getAllDeliveryAreas()){
             CanvasLayer.Polygon polygon = canvas.addPolygon(deliveryArea.getPolygon());
             polygon.setStyle(geometryStyles.polygon()
                     .setFillColor("#"+deliveryArea.getColor())
                     .setStrokeColor("#"+deliveryArea.getColor())
                     .setFillOpacity(0.1)
-                    .setStrokeWeight(2));
+                    .setStrokeWeight(1));
         }
 
 

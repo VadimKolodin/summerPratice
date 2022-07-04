@@ -70,7 +70,7 @@
         </hbox>
         </vbox>
         <maps:geoMap id="map" height="400px" width="600px" centerX="50.159769" centerY="53.20376" zoom="12">
-            <maps:layers>
+            <maps:layers selectedLayer="restaurantLayer">
                 <maps:tile id="tiles" tileProvider="map_OpenStreetMap"/>
                 <maps:vector id="restaurantLayer" dataContainer="restaurantsDc"/>
             </maps:layers>

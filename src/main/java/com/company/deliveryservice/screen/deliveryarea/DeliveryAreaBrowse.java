@@ -9,8 +9,6 @@ import io.jmix.mapsui.component.layer.VectorLayer;
 import io.jmix.mapsui.component.layer.style.GeometryStyle;
 import io.jmix.mapsui.component.layer.style.GeometryStyles;
 import io.jmix.ui.component.GroupTable;
-import io.jmix.ui.component.Table;
-import io.jmix.ui.icon.Icons;
 import io.jmix.ui.icon.JmixIcon;
 import io.jmix.ui.screen.*;
 import com.company.deliveryservice.entity.DeliveryArea;
@@ -45,7 +43,11 @@ public class DeliveryAreaBrowse extends StandardLookup<DeliveryArea> {
         deliveryAreasTable.setSelected(event.getItem());
         CanvasLayer canvas = map.getCanvas();
         CanvasLayer.Polygon polygon = canvas.addPolygon(event.getItem().getPolygon());
-        polygon.setStyle(geometryStyles.polygon().setFillColor("#FFFFFF").setStrokeWeight(5).setStrokeColor("#FFFFFF"));
+        polygon.setStyle(geometryStyles.polygon()
+                .setFillColor("#FFFFFF")
+                .setStrokeWeight(3)
+                .setStrokeColor("#FFFFFF")
+                .setFillOpacity(0.5));
         if (oldPolygon!=null) {
             canvas.removePolygon(oldPolygon);
         }
@@ -70,7 +72,7 @@ public class DeliveryAreaBrowse extends StandardLookup<DeliveryArea> {
                 .setFillColor("#"+deliveryArea.getColor())
                 .setStrokeColor("#"+deliveryArea.getColor())
                 .setFillOpacity(0.3)
-                .setStrokeWeight(3);
+                .setStrokeWeight(2);
     }
 
 

@@ -8,6 +8,7 @@
               caption="msg://com.company.deliveryservice.screen.restaurant/restaurantBrowse.menu"/>
         <item screen="DeliveryArea.browse"
               caption="msg://com.company.deliveryservice.screen.deliveryarea/deliveryAreaBrowse.menu"/>
+        <item screen="Order_.browse" caption="msg://com.company.deliveryservice.screen.order/orderBrowse.menu"/>
     </menu>
 
 </menu-config>
