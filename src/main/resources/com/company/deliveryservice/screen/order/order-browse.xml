@@ -44,10 +44,10 @@
                 <action id="remove" type="remove"/>
             </actions>
             <columns>
-                <column id="descr"/>
+                <column id="description"/>
                 <column id="address"/>
-                <column id="coordinates"/>
                 <column id="status"/>
+                <column id="coordinates"/>
             </columns>
             <simplePagination/>
             <buttonsPanel id="buttonsPanel"

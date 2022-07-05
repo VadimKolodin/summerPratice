@@ -1,10 +1,12 @@
 package com.company.deliveryservice.entity;
 
+import io.jmix.core.DeletePolicy;
 import io.jmix.core.annotation.DeletedBy;
 import io.jmix.core.annotation.DeletedDate;
 import io.jmix.core.entity.annotation.JmixGeneratedValue;
+import io.jmix.core.entity.annotation.OnDeleteInverse;
+import io.jmix.core.metamodel.annotation.InstanceName;
 import io.jmix.core.metamodel.annotation.JmixEntity;
-import io.jmix.maps.Geometry;
 import org.locationtech.jts.geom.Point;
 import org.springframework.data.annotation.CreatedBy;
 import org.springframework.data.annotation.CreatedDate;
@@ -27,24 +29,27 @@ public class Order {
     @Id
     private UUID id;
 
-    @Column(name = "DESCR")
-    private String descr;
+    @InstanceName
+    @Column(name = "DESCRIPTION")
+    private String description;
 
-    @Column(name = "ADDRESS", nullable = false)
     @NotNull
+    @Column(name = "ADDRESS", nullable = false)
     private String address;
 
-    @Geometry
-    @Column(name = "COORDINATES")
-    private Point coordinates;
+    @Column(name = "STATUS", nullable = false)
+    @NotNull
+    private Integer status;
 
-    @Column(name = "STATUS", length = 1)
-    private String status;
-
+    @OnDeleteInverse(DeletePolicy.CASCADE)
     @JoinColumn(name = "RESTAURANT_ID", nullable = false)
     @NotNull
     @ManyToOne(fetch = FetchType.LAZY, optional = false)
     private Restaurant restaurant;
+
+    @Column(name = "COORDINATES", nullable = false)
+    @NotNull
+    private Point coordinates;
 
     @CreatedBy
     @Column(name = "CREATED_BY")
@@ -81,12 +86,12 @@ public class Order {
         this.restaurant = restaurant;
     }
 
-    public String getStatus() {
-        return status;
+    public OrderStatus getStatus() {
+        return status == null ? null : OrderStatus.fromId(status);
     }
 
-    public void setStatus(String status) {
-        this.status = status;
+    public void setStatus(OrderStatus status) {
+        this.status = status == null ? null : status.getId();
     }
 
     public Point getCoordinates() {
@@ -105,12 +110,12 @@ public class Order {
         this.address = address;
     }
 
-    public String getDescr() {
-        return descr;
+    public String getDescription() {
+        return description;
     }
 
-    public void setDescr(String descr) {
-        this.descr = descr;
+    public void setDescription(String description) {
+        this.description = description;
     }
 
     public Date getDeletedDate() {

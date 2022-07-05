@@ -27,10 +27,10 @@
     <layout spacing="true" expand="editActions">
         <form id="form" dataContainer="orderDc">
             <column width="350px">
-                <textField id="descrField" property="descr"/>
+                <textField id="descriptionField" property="description"/>
                 <textField id="addressField" property="address"/>
+                <comboBox id="statusField" property="status"/>
                 <textField id="coordinatesField" property="coordinates"/>
-                <textField id="statusField" property="status"/>
             </column>
         </form>
         <hbox id="editActions" spacing="true">
