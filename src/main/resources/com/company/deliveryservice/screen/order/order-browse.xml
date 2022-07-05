@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
 <window xmlns="http://jmix.io/schema/ui/window"
         xmlns:c="http://jmix.io/schema/ui/jpql-condition"
+        xmlns:maps="http://jmix.io/schema/maps/ui"
         caption="msg://orderBrowse.caption"
         focusComponent="ordersTable">
     <data readOnly="true">
@@ -30,7 +31,9 @@
     </actions>
     <dialogMode height="600"
                 width="800"/>
-    <layout expand="ordersTable" spacing="true">
+    <layout  spacing="true">
+        <vbox id="all" spacing="true">
+        <vbox id="tablebox" spacing="true" >
         <filter id="filter"
                 dataLoader="ordersDl">
             <properties include=".*"/>
@@ -61,5 +64,15 @@
             <button action="lookupSelectAction"/>
             <button action="lookupCancelAction"/>
         </hbox>
+        </vbox>
+            <maps:geoMap id="map" height="400px" width="600px"
+                         centerX="50.159769" centerY="53.20376" zoom="12">
+                <maps:layers selectedLayer="orderLayer">
+                    <maps:tile id="tileLayer" tileProvider="map_OpenStreetMap"/>
+                    <maps:vector id="orderLayer"
+                                 dataContainer="ordersDc"/>
+                </maps:layers>
+            </maps:geoMap>
+        </vbox>
     </layout>
 </window>

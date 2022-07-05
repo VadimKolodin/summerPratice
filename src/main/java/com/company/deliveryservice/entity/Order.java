@@ -7,6 +7,7 @@ import io.jmix.core.entity.annotation.JmixGeneratedValue;
 import io.jmix.core.entity.annotation.OnDeleteInverse;
 import io.jmix.core.metamodel.annotation.InstanceName;
 import io.jmix.core.metamodel.annotation.JmixEntity;
+import io.jmix.maps.Geometry;
 import org.locationtech.jts.geom.Point;
 import org.springframework.data.annotation.CreatedBy;
 import org.springframework.data.annotation.CreatedDate;
@@ -47,6 +48,7 @@ public class Order {
     @ManyToOne(fetch = FetchType.LAZY, optional = false)
     private Restaurant restaurant;
 
+    @Geometry
     @Column(name = "COORDINATES", nullable = false)
     @NotNull
     private Point coordinates;

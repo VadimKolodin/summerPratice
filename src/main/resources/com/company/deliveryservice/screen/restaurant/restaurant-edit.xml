@@ -47,7 +47,8 @@
             <button id="closeBtn" action="windowClose"/>
         </hbox>
         </vbox>
-        <maps:geoMap id="map" height="400px" width="600px" centerX="50.159769" centerY="53.20376" zoom="12">
+        <maps:geoMap id="map" height="400px" width="600px"
+                     centerX="50.159769" centerY="53.20376" zoom="12">
             <maps:layers selectedLayer="restaurantLayer">
                 <maps:tile id="tileLayer" tileProvider="map_OpenStreetMap"/>
                 <maps:vector id="restaurantLayer"
