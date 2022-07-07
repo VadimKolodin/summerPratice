@@ -8,6 +8,7 @@ import io.jmix.mapsui.component.GeoMap;
 import io.jmix.mapsui.component.layer.VectorLayer;
 import io.jmix.mapsui.component.layer.style.GeometryStyle;
 import io.jmix.mapsui.component.layer.style.GeometryStyles;
+import io.jmix.ui.RemoveOperation;
 import io.jmix.ui.component.GroupTable;
 import io.jmix.ui.icon.JmixIcon;
 import io.jmix.ui.screen.*;
@@ -15,6 +16,7 @@ import com.company.deliveryservice.entity.DeliveryArea;
 import org.springframework.beans.factory.annotation.Autowired;
 
 import java.awt.*;
+import java.util.HashMap;
 
 @UiController("DeliveryArea.browse")
 @UiDescriptor("delivery-area-browse.xml")
@@ -36,10 +38,12 @@ public class DeliveryAreaBrowse extends StandardLookup<DeliveryArea> {
     private RestaurantService restaurantsService;
 
     private CanvasLayer.Polygon oldPolygon;
-
+    private HashMap<DeliveryArea, CanvasLayer.Point> restaurantPointHashMap = new HashMap<>();
 
     @Subscribe("map.areaLayer")
     public void onMapAreaLayerGeoObjectSelected(VectorLayer.GeoObjectSelectedEvent<DeliveryArea> event) {
+        if (event.getItem()==null)
+            return;
         deliveryAreasTable.setSelected(event.getItem());
         CanvasLayer canvas = map.getCanvas();
         CanvasLayer.Polygon polygon = canvas.addPolygon(event.getItem().getPolygon());
@@ -63,6 +67,7 @@ public class DeliveryAreaBrowse extends StandardLookup<DeliveryArea> {
                     geometryStyles.point()
                             .withFontIcon(JmixIcon.COFFEE)
                             .setIconPathFillColor("#"+restaurant.getDelivery().getColor()));
+            restaurantPointHashMap.put(restaurant.getDelivery(), point);
         }
 
     }
@@ -73,6 +78,28 @@ public class DeliveryAreaBrowse extends StandardLookup<DeliveryArea> {
                 .setStrokeColor("#"+deliveryArea.getColor())
                 .setFillOpacity(0.3)
                 .setStrokeWeight(2);
+    }
+
+    @Install(to = "deliveryAreasTable.edit", subject = "afterCommitHandler")
+    private void deliveryAreasTableEditAfterCommitHandler(DeliveryArea deliveryArea) {
+        if (oldPolygon!=null) {
+            CanvasLayer canvas = map.getCanvas();
+            canvas.removePolygon(oldPolygon);
+            oldPolygon = null;
+        }
+    }
+
+    @Install(to = "deliveryAreasTable.remove", subject = "afterActionPerformedHandler")
+    private void deliveryAreasTableRemoveAfterActionPerformedHandler(RemoveOperation.AfterActionPerformedEvent<DeliveryArea> afterActionPerformedEvent) {
+        CanvasLayer canvas = map.getCanvas();
+        if (oldPolygon!=null) {
+            canvas.removePolygon(oldPolygon);
+            oldPolygon = null;
+        }
+        for (DeliveryArea deliveryArea: afterActionPerformedEvent.getItems()){
+            canvas.removePoint(restaurantPointHashMap.get(deliveryArea));
+            restaurantPointHashMap.remove(deliveryArea);
+        }
     }
 
 

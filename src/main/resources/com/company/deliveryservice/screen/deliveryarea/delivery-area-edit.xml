@@ -32,7 +32,7 @@
         <form id="form" dataContainer="deliveryAreaDc">
             <column width="350px">
                 <textField id="polygonField" property="polygon"/>
-                <textField id="colorField" property="color"/>
+                <textField id="colorField" property="color" editable="false"/>
             </column>
         </form>
         <hbox id="editActions" spacing="true">
@@ -41,7 +41,7 @@
         </hbox>
 
         </vbox>
-            <colorPicker caption="Choose colour for polygone"
+            <colorPicker caption="msg://choosecolor"
                          dataContainer="deliveryAreaDc"
                          property="color"/>
         </hbox>

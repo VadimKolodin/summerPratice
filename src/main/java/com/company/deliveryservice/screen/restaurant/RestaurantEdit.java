@@ -3,6 +3,7 @@ package com.company.deliveryservice.screen.restaurant;
 import com.company.deliveryservice.app.DeliveryAreaService;
 import com.company.deliveryservice.app.RestaurantService;
 import com.company.deliveryservice.entity.DeliveryArea;
+import io.jmix.core.Messages;
 import io.jmix.mapsui.component.CanvasLayer;
 import io.jmix.mapsui.component.GeoMap;
 import io.jmix.mapsui.component.layer.style.GeometryStyles;
@@ -32,16 +33,24 @@ public class RestaurantEdit extends StandardEditor<Restaurant> {
     @Autowired
     private Notifications notifications;
 
+    @Autowired
+    private Messages messages;
+
     @Install(to = "map.restaurantLayer", subject = "tooltipContentProvider")
     private String mapRestaurantLayerTooltipContentProvider(Restaurant restaurant) {
         return restaurant.getName();
     }
     @Subscribe
     public void onBeforeCommitChange(BeforeCommitChangesEvent event){
-        if (restaurantService.isDeliveryAreaFree(getEditedEntity().getDelivery())){
-            event.resume();
+        if (restaurantService.isDeliveryAreaFree(getEditedEntity())){
+            if (restaurantService.isRestaurantWithinItsDelivery(getEditedEntity())){
+                event.resume();
+            }else{
+                notifications.create().withCaption(messages.getMessage("com.company.deliveryservice.screen.restaurant","wrongrestaurantcoordinates")).show();
+                event.preventCommit();
+            }
         } else {
-            notifications.create().withCaption("This delivery area is already used by another restaurant").show();
+            notifications.create().withCaption(messages.getMessage("com.company.deliveryservice.screen.restaurant","wrongdeliveryarea")).show();
             event.preventCommit();
         }
     }

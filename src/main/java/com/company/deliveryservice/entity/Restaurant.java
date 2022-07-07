@@ -6,6 +6,7 @@ import io.jmix.core.annotation.DeletedDate;
 import io.jmix.core.entity.annotation.JmixGeneratedValue;
 import io.jmix.core.entity.annotation.OnDelete;
 import io.jmix.core.entity.annotation.OnDeleteInverse;
+import io.jmix.core.metamodel.annotation.DependsOnProperties;
 import io.jmix.core.metamodel.annotation.InstanceName;
 import io.jmix.core.metamodel.annotation.JmixEntity;
 import io.jmix.maps.Geometry;
@@ -31,7 +32,6 @@ public class Restaurant {
     @Id
     private UUID id;
 
-    @InstanceName
     @Column(name = "NAME", nullable = false)
     @NotNull
     private String name;
@@ -45,7 +45,7 @@ public class Restaurant {
     @NotNull
     private Point coordinates;
 
-    @OnDeleteInverse(DeletePolicy.DENY)
+    @OnDeleteInverse(DeletePolicy.CASCADE)
     @OnDelete(DeletePolicy.CASCADE)
     @JoinColumn(name = "DELIVERY_ID", nullable = false)
     @NotNull
@@ -165,5 +165,11 @@ public class Restaurant {
 
     public void setId(UUID id) {
         this.id = id;
+    }
+
+    @InstanceName
+    @DependsOnProperties({"address", "name"})
+    public String getInstanceName() {
+        return String.format("%s (%s)", name,address );
     }
 }

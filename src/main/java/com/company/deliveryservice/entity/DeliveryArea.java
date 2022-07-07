@@ -3,6 +3,8 @@ package com.company.deliveryservice.entity;
 import io.jmix.core.annotation.DeletedBy;
 import io.jmix.core.annotation.DeletedDate;
 import io.jmix.core.entity.annotation.JmixGeneratedValue;
+import io.jmix.core.metamodel.annotation.DependsOnProperties;
+import io.jmix.core.metamodel.annotation.InstanceName;
 import io.jmix.core.metamodel.annotation.JmixEntity;
 import io.jmix.maps.Geometry;
 import org.hibernate.validator.constraints.Length;
@@ -132,5 +134,11 @@ public class DeliveryArea {
 
     public void setId(UUID id) {
         this.id = id;
+    }
+
+    @InstanceName
+    @DependsOnProperties({"color"})
+    public String getInstanceName() {
+        return String.format("%s", color);
     }
 }

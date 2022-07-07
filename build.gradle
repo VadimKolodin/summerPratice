@@ -50,6 +50,7 @@ dependencies {
     implementation("io.jmix.maps:jmix-maps-starter")
     implementation("io.jmix.maps:jmix-maps-ui-starter")
     implementation("org.postgresql:postgresql")
+    implementation("io.jmix.translations:jmix-translations-ru")
 }
 
 test {

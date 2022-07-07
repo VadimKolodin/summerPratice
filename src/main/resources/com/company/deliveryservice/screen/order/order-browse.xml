@@ -11,6 +11,11 @@
             <loader id="ordersDl">
                 <query>
                     <![CDATA[select e from Order_ e]]>
+                    <condition>
+                        <c:jpql>
+                            <c:where>e.status = :status</c:where>
+                        </c:jpql>
+                    </condition>
                 </query>
             </loader>
         </collection>
@@ -51,6 +56,7 @@
                 <column id="address"/>
                 <column id="status"/>
                 <column id="coordinates"/>
+                <column id="restaurant"/>
             </columns>
             <simplePagination/>
             <buttonsPanel id="buttonsPanel"
@@ -58,11 +64,15 @@
                 <button id="createBtn" action="ordersTable.create"/>
                 <button id="editBtn" action="ordersTable.edit"/>
                 <button id="removeBtn" action="ordersTable.remove"/>
+                <comboBox id="statusField"
+                          optionsEnum="com.company.deliveryservice.entity.OrderStatus"
+                caption="msg://orderBrowse.statuscaption"/>
             </buttonsPanel>
         </groupTable>
         <hbox id="lookupActions" spacing="true" visible="false">
             <button action="lookupSelectAction"/>
             <button action="lookupCancelAction"/>
+
         </hbox>
         </vbox>
             <maps:geoMap id="map" height="400px" width="600px"

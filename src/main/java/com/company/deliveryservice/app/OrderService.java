@@ -40,4 +40,8 @@ public class OrderService {
         return nearestRestaurant;
     }
 
+    public List<Order> getAllOrders(){
+       return dataManager.load(Order.class).all().list();
+    }
+
 }

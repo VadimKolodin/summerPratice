@@ -5,6 +5,7 @@ import com.company.deliveryservice.app.RestaurantService;
 import com.company.deliveryservice.entity.DeliveryArea;
 import com.company.deliveryservice.entity.Restaurant;
 import com.company.deliveryservice.exceptions.CannotFingRestautantException;
+import io.jmix.core.Messages;
 import io.jmix.mapsui.component.CanvasLayer;
 import io.jmix.mapsui.component.GeoMap;
 import io.jmix.mapsui.component.layer.VectorLayer;
@@ -39,6 +40,9 @@ public class OrderEdit extends StandardEditor<Order> {
     @Autowired
     private Notifications notifications;
 
+    @Autowired
+    private Messages messages;
+
     @Subscribe
     protected void onBeforeShow(BeforeShowEvent event) {
         CanvasLayer canvas = map.getCanvas();
@@ -64,7 +68,7 @@ public class OrderEdit extends StandardEditor<Order> {
             order.setRestaurant(orderService.findRestaurantForOrder(order));
             event.resume();
         } catch (CannotFingRestautantException e){
-            notifications.create().withCaption("Order must be within at least one delivery area of restaurant").show();
+            notifications.create().withCaption(messages.getMessage("com.company.deliveryservice.screen.order", "cannotfindrestaurant")).show();
             event.preventCommit();
         }
     }

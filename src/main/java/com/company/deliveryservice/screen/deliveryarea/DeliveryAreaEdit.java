@@ -3,6 +3,7 @@ package com.company.deliveryservice.screen.deliveryarea;
 import com.company.deliveryservice.app.DeliveryAreaService;
 import com.company.deliveryservice.app.RestaurantService;
 import com.company.deliveryservice.entity.Restaurant;
+import io.jmix.core.Messages;
 import io.jmix.mapsui.component.CanvasLayer;
 import io.jmix.mapsui.component.GeoMap;
 import io.jmix.mapsui.component.layer.style.GeometryStyles;
@@ -31,13 +32,18 @@ public class DeliveryAreaEdit extends StandardEditor<DeliveryArea> {
     @Autowired
     private GeometryStyles geometryStyles;
 
+    @Autowired
+    Messages messages;
+
     @Subscribe
     public void onBeforeCommitChange(BeforeCommitChangesEvent event){
         DeliveryArea deliveryArea = getEditedEntity();
         if (deliveryAreaService.isHex(deliveryArea.getColor())){
             event.resume();
         } else {
-            notifications.create().withCaption("Colour must be hexadecimal string").show();
+            notifications.create().withCaption(messages.getMessage(
+                    "com.company.deliveryservice.screen.deliveryarea",
+                    "wrongcolourinput")).show();
             event.preventCommit();
         }
     }
