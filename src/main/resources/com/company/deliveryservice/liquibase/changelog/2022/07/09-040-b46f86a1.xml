@@ -1,0 +1,110 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<databaseChangeLog
+        xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+        xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+        xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog
+                      http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-4.5.xsd"
+        objectQuotingStrategy="QUOTE_ONLY_RESERVED_WORDS">
+
+    <changeSet id="1" author="deliveryService">
+        <insert tableName="DELIVERY_AREA">
+            <column name="ID" value="26c40a51-e250-d257-b7bf-21af9f0b0500"/>
+            <column name="POLYGON" value="POLYGON ((50.145424 53.214138, 50.164139 53.200455, 50.213492 53.201932, 50.212227 53.214148, 50.187952 53.233916, 50.16232 53.225395, 50.145424 53.214138))"/>
+            <column name="COLOR" value="e86b00"/>
+        </insert>
+        <insert tableName="DELIVERY_AREA">
+            <column name="ID" value="945640c5-9ec9-dd35-ccf1-4dd3435e463c"/>
+            <column name="POLYGON" value="POLYGON ((50.114825 53.207399, 50.129931 53.195266, 50.157053 53.203698, 50.136111 53.217679, 50.131991 53.216446, 50.114825 53.207399))"/>
+            <column name="COLOR" value="00bebe"/>
+        </insert>
+        <insert tableName="DELIVERY_AREA">
+            <column name="ID" value="d8080b73-8f1f-4ba6-517b-5b29d202d2f7"/>
+            <column name="POLYGON" value="POLYGON ((50.132154 53.189654, 50.124171 53.191557, 50.124686 53.192483, 50.116618 53.194385, 50.107552 53.196319, 50.109698 53.198993, 50.123603 53.205112, 50.130717 53.199776, 50.135352 53.20173, 50.14033 53.197565, 50.151145 53.201215, 50.156525 53.197083, 50.150775 53.193946, 50.149058 53.194666, 50.140046 53.190706, 50.138672 53.188906, 50.137557 53.187209, 50.133866 53.187569, 50.132154 53.189654))"/>
+            <column name="COLOR" value="ff09d2 "/>
+        </insert>
+    </changeSet>
+    <changeSet id="2" author="deliveryService">
+        <insert tableName="RESTAURANT">
+            <column name="ID" value="a2b648a2-eb72-e34e-fa9e-10aa3a387123"/>
+            <column name="NAME" value="test1"/>
+            <column name="ADDRESS" value="address1"/>
+            <column name="COORDINATES" value="POINT (50.18516952171923 53.21612080101575)"/>
+            <column name="DELIVERY_ID" value="26c40a51-e250-d257-b7bf-21af9f0b0500"/>
+        </insert>
+        <insert tableName="RESTAURANT">
+            <column name="ID" value="fb3c248a-4701-3382-fbe0-cea7609f961e"/>
+            <column name="NAME" value="test2"/>
+            <column name="ADDRESS" value="address2"/>
+            <column name="COORDINATES" value="POINT (50.120661 53.207811)"/>
+            <column name="DELIVERY_ID" value="945640c5-9ec9-dd35-ccf1-4dd3435e463c"/>
+        </insert>
+        <insert tableName="RESTAURANT">
+            <column name="ID" value="345cfd3f-a8b0-a509-9ad0-817d94cde94e"/>
+            <column name="NAME" value="test3"/>
+            <column name="ADDRESS" value="address3"/>
+            <column name="COORDINATES" value="POINT (50.11143771233038 53.19631701353343)"/>
+            <column name="DELIVERY_ID" value="d8080b73-8f1f-4ba6-517b-5b29d202d2f7"/>
+        </insert>
+    </changeSet>
+    <changeSet id="3" author="deliveryService">
+        <insert tableName="ORDER_">
+            <column name="ID" value="5f5964a7-2b21-52f9-d1ed-00567d210317"/>
+            <column name="DESCRIPTION" value="order1"/>
+            <column name="ADDRESS" value="order1"/>
+            <column name="STATUS" value="0"/>
+            <column name="COORDINATES" value="POINT (50.164606 53.21302)"/>
+            <column name="RESTAURANT_ID" value="a2b648a2-eb72-e34e-fa9e-10aa3a387123"/>
+        </insert>
+        <insert tableName="ORDER_">
+            <column name="ID" value="500e977d-ebfb-89f6-dac2-f5f987a96751"/>
+            <column name="DESCRIPTION" value="order2"/>
+            <column name="ADDRESS" value="order2"/>
+            <column name="STATUS" value="1"/>
+            <column name="COORDINATES" value="POINT (50.15158063732088 53.20381134666199)"/>
+            <column name="RESTAURANT_ID" value="fb3c248a-4701-3382-fbe0-cea7609f961e"/>
+        </insert>
+        <insert tableName="ORDER_">
+            <column name="ID" value="0a37d733-af74-cfa9-f34b-c341519b6f9c"/>
+            <column name="DESCRIPTION" value="order3"/>
+            <column name="ADDRESS" value="order3"/>
+            <column name="STATUS" value="0"/>
+            <column name="COORDINATES" value="POINT (50.12107028975152 53.20364991181625)"/>
+            <column name="RESTAURANT_ID" value="fb3c248a-4701-3382-fbe0-cea7609f961e"/>
+        </insert>
+        <insert tableName="ORDER_">
+            <column name="ID" value="f3a19eea-db58-1819-11d6-bbbe0aa2a853"/>
+            <column name="DESCRIPTION" value="order4"/>
+            <column name="ADDRESS" value="order4"/>
+            <column name="STATUS" value="0"/>
+            <column name="COORDINATES" value="POINT (50.14023 53.206166)"/>
+            <column name="RESTAURANT_ID" value="fb3c248a-4701-3382-fbe0-cea7609f961e"/>
+        </insert>
+        <insert tableName="ORDER_">
+            <column name="ID" value="40ea8b31-21cb-4254-d2a6-eaa3eb566e1e"/>
+            <column name="DESCRIPTION" value="order5"/>
+            <column name="ADDRESS" value="order5"/>
+            <column name="STATUS" value="0"/>
+            <column name="COORDINATES" value="POINT (50.123064 53.195955)"/>
+            <column name="RESTAURANT_ID" value="345cfd3f-a8b0-a509-9ad0-817d94cde94e"/>
+        </insert>
+        <insert tableName="ORDER_">
+            <column name="ID" value="13287118-911d-a8a7-16f4-d2e1bdf8b9a6"/>
+            <column name="DESCRIPTION" value="order6"/>
+            <column name="ADDRESS" value="order6"/>
+            <column name="STATUS" value="0"/>
+            <column name="COORDINATES" value="POINT (50.135869116056725 53.19077171055008)"/>
+            <column name="RESTAURANT_ID" value="345cfd3f-a8b0-a509-9ad0-817d94cde94e"/>
+        </insert>
+        <insert tableName="ORDER_">
+            <column name="ID" value="5666dd4d-45f8-6f21-3145-f37a4432113d"/>
+            <column name="DESCRIPTION" value="order7"/>
+            <column name="ADDRESS" value="order7"/>
+            <column name="STATUS" value="-1"/>
+            <column name="COORDINATES" value="POINT (50.13547116948758 53.2002490924963)"/>
+            <column name="RESTAURANT_ID" value="fb3c248a-4701-3382-fbe0-cea7609f961e"/>
+        </insert>
+    </changeSet>
+
+
+
+</databaseChangeLog>
