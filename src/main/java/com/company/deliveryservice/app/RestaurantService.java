@@ -30,5 +30,17 @@ public class RestaurantService {
         return restaurant.getDelivery().getPolygon().contains(restaurant.getCoordinates());
     }
 
+    public boolean isRestaurantWithinDelivery(Restaurant restaurant, DeliveryArea deliveryArea){
+        return deliveryArea.getPolygon().contains(restaurant.getCoordinates());
+    }
 
+    public Restaurant getRestaurantByItsDeliveryArea(DeliveryArea deliveryArea){
+        List<Restaurant> restaurants = dataManager.load(Restaurant.class).query("e.delivery=?1",
+                deliveryArea).list();
+        if (restaurants.isEmpty()){
+            return null;
+        } else {
+            return restaurants.get(0);
+        }
+    }
 }

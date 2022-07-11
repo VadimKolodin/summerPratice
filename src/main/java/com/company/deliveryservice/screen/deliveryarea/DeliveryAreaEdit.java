@@ -9,6 +9,7 @@ import io.jmix.mapsui.component.GeoMap;
 import io.jmix.mapsui.component.layer.style.GeometryStyles;
 import io.jmix.ui.Notifications;
 import io.jmix.ui.icon.JmixIcon;
+import io.jmix.ui.model.InstanceContainer;
 import io.jmix.ui.screen.*;
 import com.company.deliveryservice.entity.DeliveryArea;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -35,21 +36,32 @@ public class DeliveryAreaEdit extends StandardEditor<DeliveryArea> {
     @Autowired
     Messages messages;
 
+    @Autowired
+    private InstanceContainer<DeliveryArea> deliveryAreaDc;
+
     @Subscribe
     public void onBeforeCommitChange(BeforeCommitChangesEvent event){
         DeliveryArea deliveryArea = getEditedEntity();
-        if (deliveryAreaService.isHex(deliveryArea.getColor())){
+        if (!deliveryAreaService.isHex(deliveryArea.getColor())){
+            notifications.create().withCaption(messages.getMessage(
+                    "com.company.deliveryservice.screen.deliveryarea",
+                    "wrongcolourinput")).show();
+            event.preventCommit();
+            return;
+        }
+        Restaurant restaurant = restaurantService.getRestaurantByItsDeliveryArea(deliveryArea);
+        if (restaurant==null||restaurantService.isRestaurantWithinDelivery(restaurant, deliveryArea)){
             event.resume();
         } else {
             notifications.create().withCaption(messages.getMessage(
                     "com.company.deliveryservice.screen.deliveryarea",
-                    "wrongcolourinput")).show();
+                    "wrongarea")).show();
             event.preventCommit();
         }
     }
 
     @Subscribe
-    protected void onBeforeShow(BeforeShowEvent event) {
+    protected void onAfterShow(AfterShowEvent event) {
         CanvasLayer canvas = map.getCanvas();
 
         for (Restaurant restaurant: restaurantService.getAllRestaurant()){
@@ -61,6 +73,9 @@ public class DeliveryAreaEdit extends StandardEditor<DeliveryArea> {
         }
 
         for (DeliveryArea deliveryArea: deliveryAreaService.getAllDeliveryAreas()){
+            if (deliveryArea.equals(deliveryAreaDc.getItem())){
+                continue;
+            }
             CanvasLayer.Polygon polygon = canvas.addPolygon(deliveryArea.getPolygon());
             polygon.setStyle(geometryStyles.polygon()
                     .setFillColor("#"+deliveryArea.getColor())
